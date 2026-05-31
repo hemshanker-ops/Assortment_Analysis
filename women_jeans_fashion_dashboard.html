@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VMart — Women's Jeans Fashion | Buying Intelligence Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F4F1EC;
+  --surface: #FFFFFF;
+  --surface2: #EDE9E2;
+  --border: rgba(0,0,0,0.10);
+  --border-strong: rgba(0,0,0,0.18);
+  --text: #1A1714;
+  --text-muted: #6B6560;
+  --text-hint: #9E9890;
+  --accent: #1B3A6B;
+  --accent-light: #E8EEF7;
+  --danger: #8B1A1A;
+  --danger-bg: #FDF0F0;
+  --warn: #7A4A00;
+  --warn-bg: #FEF5E4;
+  --success: #1E5C2E;
+  --success-bg: #EDF7EF;
+  --gold: #B8831A;
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.04em; }
+.header-meta { font-size: 11px; opacity: 0.65; font-family: 'DM Mono', monospace; }
+.header-badge {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+
+/* LAYOUT */
+.page-wrap { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* HERO STRIP */
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.hero-title { font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 6px; }
+.hero-sub { font-size: 13px; color: var(--text-muted); }
+.hero-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill {
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+.pill-warn { background: var(--warn-bg); border-color: var(--warn); color: var(--warn); }
+.pill-danger { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.pill-success { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+
+/* KPI GRID */
+.kpi-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+}
+.kpi-label { font-size: 10px; color: var(--text-hint); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; margin-bottom: 6px; text-transform: uppercase; }
+.kpi-val { font-size: 22px; font-weight: 700; line-height: 1; }
+.kpi-sub { font-size: 10px; margin-top: 4px; font-family: 'DM Mono', monospace; }
+.kpi-val.c-danger { color: var(--danger); }
+.kpi-val.c-warn { color: var(--warn); }
+.kpi-val.c-success { color: var(--success); }
+.kpi-val.c-gold { color: var(--gold); }
+.kpi-sub.c-danger { color: var(--danger); }
+.kpi-sub.c-warn { color: var(--warn); }
+.kpi-sub.c-success { color: var(--success); }
+
+/* TABS */
+.tabs-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  width: fit-content;
+}
+.tab-btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.tab-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* SECTION */
+.section { margin-bottom: 1.75rem; }
+.section-title {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-hint);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* SCQA */
+.scqa-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.scqa-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent);
+}
+.scqa-block.answer { border-left-color: var(--success); }
+.scqa-label { font-size: 9px; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-hint); margin-bottom: 6px; }
+.scqa-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+
+/* 2-COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+}
+
+/* TABLE */
+.tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead tr { background: var(--surface2); }
+th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface2); }
+
+/* SIGNALS */
+.sig {
+  display: inline-block;
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.sig-fire { background: #FEF5E4; color: #7A4A00; border: 1px solid #B8831A; }
+.sig-buy { background: var(--success-bg); color: var(--success); }
+.sig-hold { background: var(--warn-bg); color: var(--warn); }
+.sig-exit { background: var(--danger-bg); color: var(--danger); }
+.sig-crit { background: #8B1A1A; color: #fff; }
+.sig-trap { background: #3D1515; color: #FFAAAA; }
+.sig-lead { background: #0D2E14; color: #A3DDB8; }
+.sig-opp { background: #1A3A14; color: #8FCC8F; }
+
+/* ZONE GRID */
+.zone-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.zone-cell {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.zone-name { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-hint); margin-bottom: 6px; }
+.zone-val { font-size: 20px; font-weight: 700; }
+.zone-delta { font-size: 10px; font-family: 'DM Mono', monospace; margin-top: 3px; }
+.zone-cell.z-pos { background: var(--success-bg); border-color: rgba(30,92,46,0.2); }
+.zone-cell.z-mid { background: var(--warn-bg); border-color: rgba(122,74,0,0.2); }
+.zone-cell.z-neg { background: var(--danger-bg); border-color: rgba(139,26,26,0.2); }
+
+/* PROG BAR */
+.prog { height: 5px; border-radius: 3px; background: var(--surface2); overflow: hidden; margin-top: 4px; }
+.prog-fill { height: 100%; border-radius: 3px; }
+.pf-good { background: var(--success); }
+.pf-warn { background: var(--gold); }
+.pf-bad { background: var(--danger); }
+
+/* HEAT MAP */
+.heat-cell { padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'DM Mono', monospace; text-align: center; }
+.heat-h { background: #1E5C2E22; color: #1E5C2E; }
+.heat-m { background: #7A4A0022; color: #7A4A00; }
+.heat-l { background: #8B1A1A22; color: #8B1A1A; }
+
+/* TREND CARD */
+.trend-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.trend-name { font-size: 14px; font-weight: 600; }
+.trend-st { font-size: 12px; margin-top: 3px; }
+.trend-attrs { font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.7; font-family: 'DM Mono', monospace; }
+.zone-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.zone-tag { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 20px; background: var(--surface2); color: var(--text-muted); }
+.placeholder-note { font-size: 10px; color: var(--text-hint); margin-top: 8px; font-family: 'DM Mono', monospace; border-top: 1px dashed var(--border); padding-top: 6px; }
+
+/* SEARCH */
+.search-box { position: relative; margin-bottom: 1rem; }
+.search-box input {
+  width: 100%;
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-drop {
+  display: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 4px;
+  background: var(--surface);
+}
+.search-item {
+  padding: 9px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  transition: background 0.1s;
+}
+.search-item:last-child { border-bottom: none; }
+.search-item:hover { background: var(--surface2); }
+
+/* ARTICLE DETAIL */
+.art-detail { display: none; }
+.art-detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+.art-detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.art-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem; }
+.art-kpi { background: var(--surface2); border-radius: var(--radius); padding: 0.75rem; text-align: center; }
+.art-kpi-label { font-size: 9px; font-family: 'DM Mono', monospace; color: var(--text-hint); text-transform: uppercase; margin-bottom: 4px; }
+.art-kpi-val { font-size: 18px; font-weight: 700; }
+
+/* ACTION MATRIX */
+.action-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.action-row:last-child { border-bottom: none; }
+.horizon-tag {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-weight: 600;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.ht-imm { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(139,26,26,0.3); }
+.ht-med { background: var(--warn-bg); color: var(--warn); border: 1px solid rgba(122,74,0,0.3); }
+.ht-long { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(27,58,107,0.3); }
+.action-text { font-size: 13px; line-height: 1.6; }
+
+/* QA */
+.qa-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.qa-q { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--accent); }
+.qa-a { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  color: var(--text-hint);
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+  .kpi-grid { grid-template-columns: repeat(4,1fr); }
+  .zone-grid { grid-template-columns: repeat(3,1fr); }
+  .two-col, .three-col, .scqa-wrap { grid-template-columns: 1fr; }
+}
+@media(max-width: 600px) {
+  .kpi-grid { grid-template-columns: repeat(2,1fr); }
+  .zone-grid { grid-template-columns: repeat(2,1fr); }
+  .hero { flex-direction: column; align-items: flex-start; }
+  .tabs-bar { flex-wrap: wrap; width: 100%; }
+  .art-kpi-row { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <span class="header-brand">VMart Buying Intelligence</span>
+    <span class="header-meta" style="margin-left:12px;">Women's Jeans Fashion · CO26</span>
+  </div>
+  <span class="header-badge">INTERNAL USE ONLY</span>
+</header>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-sub">Women Western · Jeans-Fashion-Women · Season CO26 · BASIC</div>
+      <div class="hero-title">Buying intelligence dashboard</div>
+      <div style="font-size:12px; color:var(--text-muted); margin-top:4px; font-family:'DM Mono',monospace;">603 stores · National avg ST% 42.7% · vs target −8.2pp</div>
+    </div>
+    <div class="hero-pills">
+      <span class="pill pill-danger">38 critical options</span>
+      <span class="pill pill-warn">71 slow sellers</span>
+      <span class="pill pill-success">29 outperformers</span>
+      <span class="pill">Updated May 2026</span>
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">National ST%</div>
+      <div class="kpi-val c-warn">42.7%</div>
+      <div class="kpi-sub c-danger">vs target −8.2pp</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total options</div>
+      <div class="kpi-val">247</div>
+      <div class="kpi-sub" style="color:var(--text-hint);">Fashion + Basic</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Critical options</div>
+      <div class="kpi-val c-danger">38</div>
+      <div class="kpi-sub c-danger">ST% &lt;35% + &gt;500u stock</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Outperformers</div>
+      <div class="kpi-val c-success">29</div>
+      <div class="kpi-sub c-success">ST% &gt;70%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Slow sellers</div>
+      <div class="kpi-val c-warn">71</div>
+      <div class="kpi-sub c-warn">ST% &lt;40% + stock &gt;0</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">At-risk</div>
+      <div class="kpi-val c-warn">89</div>
+      <div class="kpi-sub c-warn">ST% &lt;45%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Winners</div>
+      <div class="kpi-val c-success">63</div>
+      <div class="kpi-sub c-success">ST% ≥ dept avg</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Very good options</div>
+      <div class="kpi-val c-gold">41</div>
+      <div class="kpi-sub" style="color:var(--text-hint);">Company class grade</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('v1',this)">👔 Senior mgmt</button>
+    <button class="tab-btn" onclick="switchTab('v2',this)">📊 Category manager</button>
+    <button class="tab-btn" onclick="switchTab('v3',this)">🔬 Junior buyer</button>
+    <button class="tab-btn" onclick="switchTab('v4',this)">⚡ Action matrix</button>
+    <button class="tab-btn" onclick="switchTab('v5',this)">🗺️ Zonal trend</button>
+    <button class="tab-btn" onclick="switchTab('v6',this)">🏪 Store cluster trend</button>
+  </div>
+
+  <!-- VIEW 1 — SENIOR MGMT -->
+  <div class="view active" id="v1">
+
+    <div class="section">
+      <div class="section-title">SCQA narrative</div>
+      <div class="scqa-wrap">
+        <div class="scqa-block">
+          <div class="scqa-label">Situation</div>
+          <div class="scqa-text">Women's Jeans-Fashion-Women carries 247 options across 603 stores in CO26. Current national ST% sits at 42.7% against a 50.9% target — a 8.2pp shortfall that signals structural assortment overhang.</div>
+        </div>
+        <div class="scqa-block">
+          <div class="scqa-label">Complication</div>
+          <div class="scqa-text">38 options are critical (ST%&lt;35%, stock&gt;500u), locking working capital. Basic Wash dominates 58% of the mix but delivers only 38% ST% vs Fashion Wash at 61%. Mid Blue colour occupies 25% of option count at 18.7% ST%.</div>
+        </div>
+        <div class="scqa-block">
+          <div class="scqa-label">Question</div>
+          <div class="scqa-text">Which options must be exited now, which attributes should anchor SS27 buys, and where is the department structurally under-assorted in high-velocity niches?</div>
+        </div>
+        <div class="scqa-block answer">
+          <div class="scqa-label" style="color:var(--success);">Answer — headline</div>
+          <div class="scqa-text"><strong>Exit 38 critical options immediately. Reallocate 22% of option count toward Skinny Mid-Rise Fashion Wash + coloured denim — highest-velocity underrepresented cluster. Target 52% ST% for SS27 with a 180-option cap.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">What performed vs where we lagged</div>
+      <div class="two-col">
+        <div class="card">
+          <div style="font-size:13px; font-weight:600; margin-bottom:10px;">What performed well</div>
+          <div style="font-size:12px; line-height:2;">
+            <div>✅ Skinny Fit · Mid-Rise → <strong>61.4%</strong> avg ST%</div>
+            <div>✅ Fashion Wash options → <strong>61.2%</strong> ST%</div>
+            <div>✅ Black + Indigo coloured denim → <strong>68%</strong> ST%</div>
+            <div>✅ SATIN LYCRA fabric → <strong>58.7%</strong> ST%</div>
+            <div>✅ South zone → <strong>67.3%</strong> ST%</div>
+            <div>✅ Urban stores avg → <strong>71.2%</strong> ST%</div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:13px; font-weight:600; margin-bottom:10px;">Where we lagged</div>
+          <div style="font-size:12px; line-height:2;">
+            <div>❌ Skinny Fit · High-Rise → <strong style="color:var(--danger);">28.3%</strong> avg ST%</div>
+            <div>❌ Basic Wash · Solid · Mid Blue → <strong style="color:var(--danger);">11.8%</strong> ST%</div>
+            <div>❌ NON STRETCH fabric → <strong style="color:var(--danger);">31.4%</strong> ST%</div>
+            <div>❌ Bihar zone → <strong style="color:var(--danger);">34.1%</strong> ST%</div>
+            <div>❌ TWIST pattern → <strong style="color:var(--danger);">24%</strong> ST%</div>
+            <div>❌ Tier4 stores → <strong style="color:var(--danger);">29.3%</strong> — lowest cluster</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Zone performance vs national avg (42.7%)</div>
+      <div class="zone-grid">
+        <div class="zone-cell z-pos">
+          <div class="zone-name">South</div>
+          <div class="zone-val" style="color:var(--success);">67.3%</div>
+          <div class="zone-delta" style="color:var(--success);">+24.6pp</div>
+        </div>
+        <div class="zone-cell z-pos">
+          <div class="zone-name">North</div>
+          <div class="zone-val" style="color:var(--success);">51.2%</div>
+          <div class="zone-delta" style="color:var(--success);">+8.5pp</div>
+        </div>
+        <div class="zone-cell z-mid">
+          <div class="zone-name">UP East</div>
+          <div class="zone-val" style="color:var(--warn);">39.4%</div>
+          <div class="zone-delta" style="color:var(--warn);">−3.3pp</div>
+        </div>
+        <div class="zone-cell z-mid">
+          <div class="zone-name">East/JHK</div>
+          <div class="zone-val" style="color:var(--warn);">38.1%</div>
+          <div class="zone-delta" style="color:var(--warn);">−4.6pp</div>
+        </div>
+        <div class="zone-cell z-neg">
+          <div class="zone-name">Bihar</div>
+          <div class="zone-val" style="color:var(--danger);">34.1%</div>
+          <div class="zone-delta" style="color:var(--danger);">−8.6pp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Top performers — ST% ≥ dept avg (42.7%)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Article</th><th>Option class</th><th>ST%</th><th>Fit</th><th>Colour</th><th>Fabric</th><th>Wash</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-SKINNY-FIT[M]</td><td><span class="sig sig-lead">Outperformer</span></td><td style="font-weight:700;color:var(--success);">78.4%</td><td>Skinny Fit</td><td>Black</td><td>SATIN LYCRA</td><td>Fashion Wash</td><td><span class="sig sig-fire">🔥 STRONG BUY</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-BOOTCUT[M]</td><td><span class="sig sig-lead">Outperformer</span></td><td style="font-weight:700;color:var(--success);">74.1%</td><td>Boot Cut</td><td>Indigo</td><td>SATIN LYCRA</td><td>Fashion Wash</td><td><span class="sig sig-fire">🔥 STRONG BUY</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-MOM-FIT[M]</td><td><span class="sig sig-lead">Very Good</span></td><td style="font-weight:700;color:var(--success);">69.8%</td><td>Mom Fit</td><td>Light Blue</td><td>COTTON LYCRA</td><td>Acid Wash</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-FLARE[M]</td><td><span class="sig sig-lead">Very Good</span></td><td style="font-weight:700;color:var(--success);">66.3%</td><td>Flare</td><td>Dark Blue</td><td>COTTON LYCRA</td><td>Dark Wash</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-WIDE-LEG[M]</td><td><span class="sig sig-lead">Very Good</span></td><td style="font-weight:700;color:var(--success);">63.9%</td><td>Wide Leg</td><td>Off White</td><td>COTTON LYCRA</td><td>Light Wash</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-CARROT[M]</td><td><span class="sig sig-hold">Good</span></td><td style="font-weight:700;color:var(--success);">58.2%</td><td>Carrot Fit</td><td>Blue Tint</td><td>SATIN LYCRA</td><td>Stone Wash</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Slow sellers — immediate action (ST% &lt;40% + stock &gt;0)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Article</th><th>ST%</th><th>Stock units</th><th>Fit</th><th>Colour</th><th>Wash</th><th>Lifecycle</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-SKINNY-FIT[L]</td><td style="font-weight:700;color:var(--danger);">7.1%</td><td style="color:var(--danger);">1,847</td><td>Skinny Fit</td><td>Mid Blue</td><td>Basic Wash</td><td>Early Mid-Life</td><td><span class="sig sig-crit">CRITICAL</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-SKINNY-HR[L]</td><td style="font-weight:700;color:var(--danger);">12.3%</td><td style="color:var(--danger);">1,203</td><td>Skinny Fit</td><td>Blue</td><td>Basic Wash</td><td>Early Mid-Life</td><td><span class="sig sig-crit">CRITICAL</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-SLIM-FIT[L]</td><td style="font-weight:700;color:var(--danger);">18.7%</td><td style="color:var(--danger);">934</td><td>Slim Fit</td><td>Black</td><td>Basic Wash</td><td>Peak Mid-Life</td><td><span class="sig sig-crit">CRITICAL</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-BOOT-SOLID[L]</td><td style="font-weight:700;color:var(--warn);">27.4%</td><td style="color:var(--warn);">612</td><td>Boot Cut</td><td>Mid Blue</td><td>Basic Wash</td><td>Early Mid-Life</td><td><span class="sig sig-exit">AT-RISK</span></td></tr>
+            <tr><td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-STRAIGHT[L]</td><td style="font-weight:700;color:var(--warn);">31.2%</td><td style="color:var(--warn);">441</td><td>Straight</td><td>Dark Blue</td><td>Basic Wash</td><td>Peak Mid-Life</td><td><span class="sig sig-exit">AT-RISK</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Road ahead — SS27 recommendations</div>
+      <div class="card">
+        <div style="font-size:13px; line-height:2; color:var(--text);">
+          <div><strong>Fit mix:</strong> Increase Skinny Mid-Rise (+10pp options), add Flare & Wide Leg (+8pp). Remove High-Rise Skinny Basic Wash entirely.</div>
+          <div><strong>Wash shift:</strong> Move from 58% Basic Wash → 40%. Push Fashion Wash to 35%, Stone/Acid to 25%.</div>
+          <div><strong>Colour:</strong> Black + Indigo + Coloured Denim = 68% avg ST%. Expand from 14% → 22% of options. Reduce Mid Blue from 31% → 18%.</div>
+          <div><strong>Fabric:</strong> SATIN LYCRA at 58.7% — maintain. NON STRETCH at 31.4% — exit from new buys.</div>
+          <div><strong>Zone-specific:</strong> South + North = priority allocation. Bihar gets reduced depth on fashion jeans.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end v1 -->
+
+  <!-- VIEW 2 — CATEGORY MANAGER -->
+  <div class="view" id="v2">
+
+    <div style="background:var(--accent-light);border:1px solid rgba(27,58,107,0.15);border-radius:var(--radius);padding:10px 14px;margin-bottom:1.25rem;font-size:11px;font-family:'DM Mono',monospace;color:var(--accent);">
+      METHODOLOGY — blanks, ASSORTED, (blank), MIXED, NA excluded from all attribute analysis. Rows retained for ST% totals.
+    </div>
+
+    <div class="section">
+      <div class="section-title">Colour efficiency — ranked by efficiency score (not raw sales)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Colour</th><th>Eff. score</th><th>ST%</th><th>vs Target</th><th>Options</th><th>Sales/Opt</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Black</strong></td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">88.2</div><div class="prog"><div class="prog-fill pf-good" style="width:88%"></div></div></td><td style="font-weight:700;color:var(--success);">68.4%</td><td style="color:var(--success);">+17.5pp</td><td>18</td><td>412</td><td><span class="sig sig-lead">🏆 LEAD</span></td></tr>
+            <tr><td><strong>Indigo</strong></td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">81.4</div><div class="prog"><div class="prog-fill pf-good" style="width:81%"></div></div></td><td style="font-weight:700;color:var(--success);">64.7%</td><td style="color:var(--success);">+13.8pp</td><td>11</td><td>387</td><td><span class="sig sig-lead">🏆 LEAD</span></td></tr>
+            <tr><td>Light Blue</td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">72.8</div><div class="prog"><div class="prog-fill pf-good" style="width:73%"></div></div></td><td style="font-weight:700;color:var(--success);">59.3%</td><td style="color:var(--success);">+8.4pp</td><td>14</td><td>341</td><td><span class="sig sig-opp">📈 OPPORTUNITY</span></td></tr>
+            <tr><td>Dark Blue</td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">68.3</div><div class="prog"><div class="prog-fill pf-good" style="width:68%"></div></div></td><td style="font-weight:700;color:var(--success);">54.1%</td><td style="color:var(--success);">+3.2pp</td><td>19</td><td>298</td><td><span class="sig sig-hold">⚠️ MONITOR</span></td></tr>
+            <tr><td>Off White</td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">61.7</div><div class="prog"><div class="prog-fill pf-warn" style="width:62%"></div></div></td><td style="font-weight:700;color:var(--success);">52.8%</td><td style="color:var(--success);">+1.9pp</td><td>8</td><td>271</td><td><span class="sig sig-hold">⚠️ MONITOR</span></td></tr>
+            <tr><td>Blue Tint</td><td><div style="font-family:'DM Mono',monospace;font-weight:600;">55.2</div><div class="prog"><div class="prog-fill pf-warn" style="width:55%"></div></div></td><td style="font-weight:700;color:var(--warn);">44.6%</td><td style="color:var(--warn);">−6.3pp</td><td>12</td><td>218</td><td><span class="sig sig-hold">⚠️ MONITOR</span></td></tr>
+            <tr><td style="color:var(--danger);"><strong>Mid Blue</strong></td><td><div style="font-family:'DM Mono',monospace;font-weight:600;color:var(--danger);">29.4</div><div class="prog"><div class="prog-fill pf-bad" style="width:29%"></div></div></td><td style="font-weight:700;color:var(--danger);">18.7%</td><td style="color:var(--danger);">−24.0pp</td><td style="color:var(--danger);font-weight:700;">61</td><td>94</td><td><span class="sig sig-trap">🚨 VOLUME TRAP</span></td></tr>
+            <tr><td style="color:var(--danger);"><strong>Blue</strong></td><td><div style="font-family:'DM Mono',monospace;font-weight:600;color:var(--danger);">22.1</div><div class="prog"><div class="prog-fill pf-bad" style="width:22%"></div></div></td><td style="font-weight:700;color:var(--danger);">14.2%</td><td style="color:var(--danger);">−28.5pp</td><td style="color:var(--danger);font-weight:700;">47</td><td>71</td><td><span class="sig sig-exit">❌ EXIT</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">Efficiency = (ST%/max_ST)×0.40 + (Sales/Opt/max_SPO)×0.35 + (vs_target/range)×0.25 · Mid Blue: 61 options at 18.7% ST% = VOLUME TRAP. Never labelled lead.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Fit performance (sorted by sales volume)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Fit</th><th>ST%</th><th>Sales vol</th><th>Options</th><th>vs Target</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td>Skinny Fit</td><td style="font-weight:700;color:var(--success);">61.4%</td><td>28,412</td><td>74</td><td style="color:var(--success);">+10.5pp</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td>Boot Cut</td><td style="font-weight:700;color:var(--success);">58.9%</td><td>19,847</td><td>41</td><td style="color:var(--success);">+8.0pp</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td>Mom Fit</td><td style="font-weight:700;color:var(--success);">57.3%</td><td>14,221</td><td>28</td><td style="color:var(--success);">+6.4pp</td><td><span class="sig sig-buy">✅ BUY</span></td></tr>
+            <tr><td>Flare</td><td style="font-weight:700;color:var(--success);">55.1%</td><td>11,034</td><td>19</td><td style="color:var(--success);">+4.2pp</td><td><span class="sig sig-hold">⚠️ HOLD</span></td></tr>
+            <tr><td>Wide Leg</td><td style="font-weight:700;color:var(--success);">53.7%</td><td>8,916</td><td>14</td><td style="color:var(--success);">+2.8pp</td><td><span class="sig sig-hold">⚠️ HOLD</span></td></tr>
+            <tr><td>Straight Fit</td><td style="font-weight:700;color:var(--warn);">39.4%</td><td>7,832</td><td>38</td><td style="color:var(--danger);">−11.5pp</td><td><span class="sig sig-exit">❌ EXIT</span></td></tr>
+            <tr><td>Slim Fit</td><td style="font-weight:700;color:var(--danger);">29.1%</td><td>4,201</td><td>22</td><td style="color:var(--danger);">−21.8pp</td><td><span class="sig sig-exit">❌ EXIT</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-bottom:1.25rem;">
+      <div>
+        <div class="section-title">Wash performance</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Wash</th><th>ST%</th><th>Options</th><th>Signal</th></tr></thead>
+            <tbody>
+              <tr><td>Fashion Wash</td><td style="font-weight:700;color:var(--success);">61.2%</td><td>41</td><td><span class="sig sig-fire">🔥</span></td></tr>
+              <tr><td>Acid Wash</td><td style="font-weight:700;color:var(--success);">58.4%</td><td>22</td><td><span class="sig sig-buy">✅</span></td></tr>
+              <tr><td>Dark Wash</td><td style="font-weight:700;color:var(--success);">54.7%</td><td>18</td><td><span class="sig sig-buy">✅</span></td></tr>
+              <tr><td>Stone Wash</td><td style="font-weight:700;color:var(--success);">51.3%</td><td>27</td><td><span class="sig sig-hold">⚠️</span></td></tr>
+              <tr><td>Light Wash</td><td style="font-weight:700;color:var(--warn);">44.8%</td><td>24</td><td><span class="sig sig-hold">⚠️</span></td></tr>
+              <tr><td>Basic Wash</td><td style="font-weight:700;color:var(--danger);">32.1%</td><td>98</td><td><span class="sig sig-exit">❌</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">Fabric performance</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Fabric</th><th>ST%</th><th>Options</th><th>Signal</th></tr></thead>
+            <tbody>
+              <tr><td>SATIN LYCRA</td><td style="font-weight:700;color:var(--success);">58.7%</td><td>62</td><td><span class="sig sig-buy">✅</span></td></tr>
+              <tr><td>COTTON LYCRA</td><td style="font-weight:700;color:var(--success);">53.9%</td><td>81</td><td><span class="sig sig-hold">⚠️</span></td></tr>
+              <tr><td>COTTON BLEND</td><td style="font-weight:700;color:var(--warn);">41.2%</td><td>34</td><td><span class="sig sig-hold">⚠️</span></td></tr>
+              <tr><td>NON STRETCH</td><td style="font-weight:700;color:var(--danger);">31.4%</td><td>43</td><td><span class="sig sig-exit">❌</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Zone × colour heat map (ST%)</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="text-align:left;">Colour</th><th>North</th><th>UP East</th><th>Bihar</th><th>East/JHK</th><th>South</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Black</strong></td><td><span class="heat-cell heat-h">71.2%</span></td><td><span class="heat-cell heat-h">63.8%</span></td><td><span class="heat-cell heat-m">51.4%</span></td><td><span class="heat-cell heat-h">66.7%</span></td><td><span class="heat-cell heat-h">78.9%</span></td></tr>
+            <tr><td><strong>Indigo</strong></td><td><span class="heat-cell heat-h">68.4%</span></td><td><span class="heat-cell heat-m">57.2%</span></td><td><span class="heat-cell heat-m">44.1%</span></td><td><span class="heat-cell heat-h">61.3%</span></td><td><span class="heat-cell heat-h">74.2%</span></td></tr>
+            <tr><td>Light Blue</td><td><span class="heat-cell heat-m">54.3%</span></td><td><span class="heat-cell heat-m">48.7%</span></td><td><span class="heat-cell heat-m">42.3%</span></td><td><span class="heat-cell heat-m">51.8%</span></td><td><span class="heat-cell heat-h">69.1%</span></td></tr>
+            <tr><td style="color:var(--danger);"><strong>Mid Blue</strong></td><td><span class="heat-cell heat-l">19.4%</span></td><td><span class="heat-cell heat-l">14.7%</span></td><td><span class="heat-cell heat-l">11.2%</span></td><td><span class="heat-cell heat-l">16.8%</span></td><td><span class="heat-cell heat-l">22.1%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">Mid Blue fails across ALL zones — not a regional taste issue. Structural exit candidate. Black + Indigo strong in South + North.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Store cluster performance</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Store cluster</th><th>ST%</th><th>vs National</th><th>Top fit</th></tr></thead>
+          <tbody>
+            <tr><td>Urban Store</td><td style="font-weight:700;color:var(--success);">71.2%</td><td style="color:var(--success);">+28.5pp</td><td>Skinny / Flare</td></tr>
+            <tr><td>Urban and Muslim</td><td style="font-weight:700;color:var(--success);">61.4%</td><td style="color:var(--success);">+18.7pp</td><td>Boot Cut / Mom</td></tr>
+            <tr><td>Non Muslim Store</td><td style="font-weight:700;color:var(--success);">54.8%</td><td style="color:var(--success);">+12.1pp</td><td>Skinny / Wide Leg</td></tr>
+            <tr><td>Muslim Store</td><td style="font-weight:700;color:var(--warn);">38.7%</td><td style="color:var(--warn);">−4.0pp</td><td>Straight / Slim</td></tr>
+            <tr><td>Muslim and T4</td><td style="font-weight:700;color:var(--warn);">33.4%</td><td style="color:var(--warn);">−9.3pp</td><td>Straight Basic</td></tr>
+            <tr><td>Tier4 Store</td><td style="font-weight:700;color:var(--danger);">29.3%</td><td style="color:var(--danger);">−13.4pp</td><td>Basic Straight</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end v2 -->
+
+  <!-- VIEW 3 — JUNIOR BUYER -->
+  <div class="view" id="v3">
+
+    <div class="section">
+      <div class="section-title">Trend velocity — underrepresented winners (high ST%, option share &lt;15%)</div>
+
+      <div class="trend-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+          <div class="trend-name">Flare / Wide Leg fashion wash</div>
+          <span class="sig sig-fire">🔥 STRONG BUY</span>
+        </div>
+        <div class="trend-st" style="color:var(--success);font-weight:600;">ST% 67.4% · Option share 8.5% · Underrepresented by ~15pp</div>
+        <div class="trend-attrs">Fit: Flare / Wide Leg · Wash: Fashion + Light Wash · Colour: Black, Indigo · Fabric: COTTON LYCRA · Rise: Mid-Rise · Pattern: Solid</div>
+        <div class="zone-tags">
+          <span class="zone-tag">South 78.2%</span>
+          <span class="zone-tag">North 69.1%</span>
+          <span class="zone-tag">UP East 54.3%</span>
+          <span class="zone-tag">East/JHK 61.8%</span>
+        </div>
+        <div class="placeholder-note">MRP placeholder — add MRP data · Vendor placeholder — add vendor data</div>
+      </div>
+
+      <div class="trend-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+          <div class="trend-name">Mom fit acid wash coloured</div>
+          <span class="sig sig-buy">✅ BUY</span>
+        </div>
+        <div class="trend-st" style="color:var(--success);font-weight:600;">ST% 62.8% · Option share 11.3% · Underrepresented by ~10pp</div>
+        <div class="trend-attrs">Fit: Mom Fit · Wash: Acid Wash · Colour: Light Blue, Off White · Fabric: COTTON LYCRA · Rise: Mid-Rise · Pattern: Solid</div>
+        <div class="zone-tags">
+          <span class="zone-tag">South 71.4%</span>
+          <span class="zone-tag">North 61.2%</span>
+          <span class="zone-tag">Urban cluster 79.3%</span>
+        </div>
+        <div class="placeholder-note">MRP placeholder — add MRP data · Vendor placeholder — add vendor data</div>
+      </div>
+
+      <div class="trend-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+          <div class="trend-name">Carrot fit stone wash neutral</div>
+          <span class="sig sig-buy">✅ BUY</span>
+        </div>
+        <div class="trend-st" style="color:var(--success);font-weight:600;">ST% 58.2% · Option share 4.9% · Severely underrepresented</div>
+        <div class="trend-attrs">Fit: Carrot Fit · Wash: Stone Wash · Colour: Blue Tint, Dark Blue · Fabric: SATIN LYCRA · Rise: Mid-Rise · Pattern: Solid</div>
+        <div class="zone-tags">
+          <span class="zone-tag">North 62.1%</span>
+          <span class="zone-tag">South 64.8%</span>
+          <span class="zone-tag">UP East 47.2%</span>
+        </div>
+        <div class="placeholder-note">MRP placeholder — add MRP data · Vendor placeholder — add vendor data</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Article search</div>
+      <div class="search-box">
+        <input type="text" id="articleSearch" placeholder="Search article (e.g. SKINNY, FLARE, MOM, BOOT, CARROT, SLIM...)" oninput="filterArticles(this.value)" autocomplete="off">
+        <div class="search-drop" id="searchDrop"></div>
+      </div>
+      <div class="art-detail" id="artDetail"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Tail-cutting safeguard — slow nationally, strong locally</div>
+      <div class="card" style="font-size:13px; line-height:1.9;">
+        <strong>JEANS-STRAIGHT[L] · National ST% 31.2%</strong><br>
+        Before cutting: UP East stores avg 47.8% ST% on this option. Muslim Store cluster averages 52.1%. This is a localized winner in non-urban Muslim-majority markets. Do NOT cut nationally. Reassign stock from underperforming Urban stores to UP East + Muslim cluster stores.
+        <br><br>
+        <strong>JEANS-MOM-SOLID[L] · National ST% 38.7%</strong><br>
+        Bihar zone: 28.3% ST%. UP East: 61.4% ST%. North: 54.2%. Strong in North + UP East — Bihar's weak ST% should not drive a national exit. Withdraw from Bihar allocation only.
+      </div>
+    </div>
+
+  </div><!-- end v3 -->
+
+  <!-- VIEW 4 — ACTION MATRIX -->
+  <div class="view" id="v4">
+
+    <div class="section">
+      <div class="section-title">Immediate actions — 0 to 30 days</div>
+      <div class="card">
+        <div class="action-row">
+          <span class="horizon-tag ht-imm">0–30d</span>
+          <div class="action-text"><strong>Exit Mid Blue + Basic Wash critical options (38 options, 1,847+ units).</strong> Mark down immediately. Target 30–40% markdown to clear stock before end-of-season. Expected working capital recovery: ~₹18–22L.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-imm">0–30d</span>
+          <div class="action-text"><strong>Stock rebalance: transfer Straight Fit + Slim Fit from Urban stores → Muslim + UP East stores.</strong> Urban ST% on these fits: 19%. Muslim store ST%: 52%. Move ~1,200 units. Zero markdown cost.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-imm">0–30d</span>
+          <div class="action-text"><strong>Freeze all replenishment on NON STRETCH fabric SKUs.</strong> 31.4% ST% nationally. No further purchase orders for CO26 season.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Medium-term shifts — 30 to 90 days (targeting SS27)</div>
+      <div class="card">
+        <div class="action-row">
+          <span class="horizon-tag ht-med">30–90d</span>
+          <div class="action-text"><strong>Re-open SS27 OTB toward Flare + Wide Leg + Mom Fit in Fashion/Acid Wash.</strong> Current option share: 14%. Target: 28%. Shift ₹12–15L OTB from Slim/Straight allocation.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-med">30–90d</span>
+          <div class="action-text"><strong>Colour rationalisation: reduce Mid Blue from 61 → 20 options, expand Black + Indigo from 29 → 48 options.</strong> Same total count, 2.1× higher expected ST%.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-med">30–90d</span>
+          <div class="action-text"><strong>Cluster-specific assortment: Tier4 + Muslim stores — reduce jeans depth by 15%, reallocate to ethnic/kurta.</strong> Jeans ST% in these clusters: 29–38%. Ethnic ST% in same stores: 58–67%.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Long-term transformation — 90+ days / SS27 structural</div>
+      <div class="card">
+        <div class="action-row">
+          <span class="horizon-tag ht-long">90+d</span>
+          <div class="action-text"><strong>Set option count cap: Women Jeans Fashion ≤ 180 options for SS27</strong> (vs current 247). Depth per option increases; sell-through improves.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-long">90+d</span>
+          <div class="action-text"><strong>Build SS27 anchor cluster: SATIN LYCRA + Skinny Mid-Rise + Fashion Wash.</strong> This combination drives 72.4% avg ST% in CO26. Minimum 30% of option depth to carry this combination.</div>
+        </div>
+        <div class="action-row">
+          <span class="horizon-tag ht-long">90+d</span>
+          <div class="action-text"><strong>South zone gets dedicated jeans assortment plan.</strong> South ST% at 67.3% vs 42.7% national. Propose separate South Buy with 25% higher fashion wash share.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Boardroom Q&A — pre-empting VP / HOD questions</div>
+      <div class="qa-block">
+        <div class="qa-q">"If we cut Slim and Straight options, won't we lose customers who buy those?"</div>
+        <div class="qa-a">Slim Fit ST% is 29.1% — 71% of customers who encounter this option do NOT buy it. The basket impact of removing a 29% ST% option is near-zero; the dead stock cost is real. Urban stores with lowest Slim Fit ST% (19%) show no increased basket size from jeans — their overall category revenue is lower than stores with tighter, higher-ST% assortments.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">"You're recommending we exit Mid Blue, but it's our highest-volume colour. Won't this tank jeans sales?"</div>
+        <div class="qa-a">Mid Blue has 61 options — 25% of total colour mix — but delivers only 18.7% ST%. That is not high-volume performance; that is high-stockout risk. When we remodel this as Black + Indigo (efficiency scores 85+), the same option count generates 3.2× the ST% per option. Revenue per option is the correct metric — not absolute revenue from a bloated colour code.</div>
+      </div>
+      <div class="qa-block">
+        <div class="qa-q">"The buying team has vendor relationships for Straight Fit and Basic Wash. Cutting creates supplier friction."</div>
+        <div class="qa-a">We are not cutting all Basic Wash or all Straight Fit. We are cutting overperformance in underperforming combinations — specifically Basic Wash + Mid Blue + Skinny High Rise, which fails nationally. Straight Fit continues in Muslim + UP East stores where it performs at 47–52% ST%. Vendor conversations shift to "redirecting allocation to higher-velocity stores" — volume-neutral, not a cut.</div>
+      </div>
+    </div>
+
+  </div><!-- end v4 -->
+
+  <!-- VIEW 5 — ZONAL TREND -->
+  <div class="view" id="v5">
+
+    <div style="background:var(--accent-light);border:1px solid rgba(27,58,107,0.15);border-radius:var(--radius);padding:10px 14px;margin-bottom:1.25rem;font-size:11px;font-family:'DM Mono',monospace;color:var(--accent);">
+      ZONAL TREND — ST% by zone × attribute. National avg = 42.7%. Signals: 🔥 ≥57.7% · ✅ ≥47.7% · ⚠️ ≥32.7% · ❌ below. Rows kept for ST% totals even when one attribute is blank.
+    </div>
+
+    <!-- ZONE SUMMARY SCORECARD -->
+    <div class="section">
+      <div class="section-title">Zone performance scorecard</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Zone</th>
+              <th>ST%</th>
+              <th>vs National</th>
+              <th>vs Target</th>
+              <th>Total options</th>
+              <th>Outperformers</th>
+              <th>Critical</th>
+              <th>Best fit</th>
+              <th>Best colour</th>
+              <th>Best wash</th>
+              <th>Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>South</strong></td>
+              <td style="font-weight:700;color:var(--success);">67.3%</td>
+              <td style="color:var(--success);">+24.6pp</td>
+              <td style="color:var(--success);">+16.4pp</td>
+              <td>247</td>
+              <td style="color:var(--success);">91</td>
+              <td style="color:var(--success);">4</td>
+              <td>Skinny / Flare</td>
+              <td>Black</td>
+              <td>Fashion Wash</td>
+              <td><span class="sig sig-fire">🔥 STRONG BUY</span></td>
+            </tr>
+            <tr>
+              <td><strong>North</strong></td>
+              <td style="font-weight:700;color:var(--success);">51.2%</td>
+              <td style="color:var(--success);">+8.5pp</td>
+              <td style="color:var(--success);">+0.3pp</td>
+              <td>247</td>
+              <td style="color:var(--success);">63</td>
+              <td style="color:var(--warn);">11</td>
+              <td>Skinny / Boot Cut</td>
+              <td>Black / Indigo</td>
+              <td>Fashion / Acid Wash</td>
+              <td><span class="sig sig-buy">✅ BUY</span></td>
+            </tr>
+            <tr>
+              <td><strong>UP East</strong></td>
+              <td style="font-weight:700;color:var(--warn);">39.4%</td>
+              <td style="color:var(--warn);">−3.3pp</td>
+              <td style="color:var(--danger);">−11.5pp</td>
+              <td>247</td>
+              <td style="color:var(--warn);">41</td>
+              <td style="color:var(--warn);">19</td>
+              <td>Mom / Straight</td>
+              <td>Indigo / Light Blue</td>
+              <td>Stone / Dark Wash</td>
+              <td><span class="sig sig-hold">⚠️ HOLD</span></td>
+            </tr>
+            <tr>
+              <td><strong>East/JHK</strong></td>
+              <td style="font-weight:700;color:var(--warn);">38.1%</td>
+              <td style="color:var(--warn);">−4.6pp</td>
+              <td style="color:var(--danger);">−12.8pp</td>
+              <td>247</td>
+              <td style="color:var(--warn);">38</td>
+              <td style="color:var(--warn);">22</td>
+              <td>Mom / Boot Cut</td>
+              <td>Indigo / Dark Blue</td>
+              <td>Acid / Stone Wash</td>
+              <td><span class="sig sig-hold">⚠️ HOLD</span></td>
+            </tr>
+            <tr>
+              <td><strong>Bihar</strong></td>
+              <td style="font-weight:700;color:var(--danger);">34.1%</td>
+              <td style="color:var(--danger);">−8.6pp</td>
+              <td style="color:var(--danger);">−16.8pp</td>
+              <td>247</td>
+              <td style="color:var(--danger);">18</td>
+              <td style="color:var(--danger);">31</td>
+              <td>Straight / Mom</td>
+              <td>Dark Blue</td>
+              <td>Stone Wash</td>
+              <td><span class="sig sig-exit">❌ EXIT DEPTH</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ZONE × FIT -->
+    <div class="section">
+      <div class="section-title">Zonal trend — fit ST% by zone</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Fit</th><th>National</th><th>South</th><th>North</th><th>UP East</th><th>East/JHK</th><th>Bihar</th><th>Best zone</th><th>Worst zone</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Skinny Fit</strong></td>
+              <td style="font-weight:700;color:var(--success);">61.4%</td>
+              <td><span class="heat-cell heat-h">79.2%</span></td>
+              <td><span class="heat-cell heat-h">68.3%</span></td>
+              <td><span class="heat-cell heat-m">51.4%</span></td>
+              <td><span class="heat-cell heat-m">57.8%</span></td>
+              <td><span class="heat-cell heat-m">43.2%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--warn);">Bihar</td>
+            </tr>
+            <tr>
+              <td><strong>Boot Cut</strong></td>
+              <td style="font-weight:700;color:var(--success);">58.9%</td>
+              <td><span class="heat-cell heat-h">74.1%</span></td>
+              <td><span class="heat-cell heat-h">63.7%</span></td>
+              <td><span class="heat-cell heat-m">48.2%</span></td>
+              <td><span class="heat-cell heat-m">54.6%</span></td>
+              <td><span class="heat-cell heat-m">41.3%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--warn);">Bihar</td>
+            </tr>
+            <tr>
+              <td><strong>Mom Fit</strong></td>
+              <td style="font-weight:700;color:var(--success);">57.3%</td>
+              <td><span class="heat-cell heat-h">71.4%</span></td>
+              <td><span class="heat-cell heat-h">61.2%</span></td>
+              <td><span class="heat-cell heat-h">58.7%</span></td>
+              <td><span class="heat-cell heat-m">55.1%</span></td>
+              <td><span class="heat-cell heat-m">44.8%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--warn);">Bihar</td>
+            </tr>
+            <tr>
+              <td><strong>Flare</strong></td>
+              <td style="font-weight:700;color:var(--success);">55.1%</td>
+              <td><span class="heat-cell heat-h">78.2%</span></td>
+              <td><span class="heat-cell heat-h">69.1%</span></td>
+              <td><span class="heat-cell heat-m">54.3%</span></td>
+              <td><span class="heat-cell heat-h">61.8%</span></td>
+              <td><span class="heat-cell heat-m">41.8%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--warn);">Bihar</td>
+            </tr>
+            <tr>
+              <td><strong>Wide Leg</strong></td>
+              <td style="font-weight:700;color:var(--success);">53.7%</td>
+              <td><span class="heat-cell heat-h">74.6%</span></td>
+              <td><span class="heat-cell heat-m">58.4%</span></td>
+              <td><span class="heat-cell heat-m">49.7%</span></td>
+              <td><span class="heat-cell heat-m">55.2%</span></td>
+              <td><span class="heat-cell heat-l">34.1%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--danger);">Bihar</td>
+            </tr>
+            <tr>
+              <td><strong>Carrot Fit</strong></td>
+              <td style="font-weight:700;color:var(--success);">58.2%</td>
+              <td><span class="heat-cell heat-h">64.8%</span></td>
+              <td><span class="heat-cell heat-h">62.1%</span></td>
+              <td><span class="heat-cell heat-m">47.2%</span></td>
+              <td><span class="heat-cell heat-m">54.7%</span></td>
+              <td><span class="heat-cell heat-m">38.4%</span></td>
+              <td style="font-size:11px;color:var(--success);">South</td>
+              <td style="font-size:11px;color:var(--warn);">Bihar</td>
+            </tr>
+            <tr>
+              <td style="color:var(--warn);">Straight Fit</td>
+              <td style="font-weight:700;color:var(--warn);">39.4%</td>
+              <td><span class="heat-cell heat-l">18.2%</span></td>
+              <td><span class="heat-cell heat-l">28.4%</span></td>
+              <td><span class="heat-cell heat-m">47.8%</span></td>
+              <td><span class="heat-cell heat-l">31.4%</span></td>
+              <td><span class="heat-cell heat-l">22.1%</span></td>
+              <td style="font-size:11px;color:var(--success);">UP East</td>
+              <td style="font-size:11px;color:var(--danger);">South</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);">Slim Fit</td>
+              <td style="font-weight:700;color:var(--danger);">29.1%</td>
+              <td><span class="heat-cell heat-l">22.8%</span></td>
+              <td><span class="heat-cell heat-l">21.4%</span></td>
+              <td><span class="heat-cell heat-l">14.2%</span></td>
+              <td><span class="heat-cell heat-l">17.6%</span></td>
+              <td><span class="heat-cell heat-l">11.3%</span></td>
+              <td style="font-size:11px;color:var(--warn);">South</td>
+              <td style="font-size:11px;color:var(--danger);">Bihar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">⚑ Straight Fit — national slow seller BUT UP East at 47.8% — do not cut nationally. Straight Fit is a zonal niche play.</div>
+    </div>
+
+    <!-- ZONE × COLOUR -->
+    <div class="section">
+      <div class="section-title">Zonal trend — colour ST% by zone</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Colour</th><th>National</th><th>South</th><th>North</th><th>UP East</th><th>East/JHK</th><th>Bihar</th><th>Zonal verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Black</strong></td>
+              <td style="font-weight:700;color:var(--success);">68.4%</td>
+              <td><span class="heat-cell heat-h">78.9%</span></td>
+              <td><span class="heat-cell heat-h">71.2%</span></td>
+              <td><span class="heat-cell heat-h">63.8%</span></td>
+              <td><span class="heat-cell heat-h">66.7%</span></td>
+              <td><span class="heat-cell heat-m">51.4%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong everywhere. Deepen all zones.</td>
+            </tr>
+            <tr>
+              <td><strong>Indigo</strong></td>
+              <td style="font-weight:700;color:var(--success);">64.7%</td>
+              <td><span class="heat-cell heat-h">74.2%</span></td>
+              <td><span class="heat-cell heat-h">68.4%</span></td>
+              <td><span class="heat-cell heat-m">57.2%</span></td>
+              <td><span class="heat-cell heat-h">61.3%</span></td>
+              <td><span class="heat-cell heat-m">44.1%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong South + North. Moderate UP East.</td>
+            </tr>
+            <tr>
+              <td><strong>Light Blue</strong></td>
+              <td style="font-weight:700;color:var(--success);">59.3%</td>
+              <td><span class="heat-cell heat-h">69.1%</span></td>
+              <td><span class="heat-cell heat-m">54.3%</span></td>
+              <td><span class="heat-cell heat-m">48.7%</span></td>
+              <td><span class="heat-cell heat-m">51.8%</span></td>
+              <td><span class="heat-cell heat-m">42.3%</span></td>
+              <td style="font-size:11px;color:var(--success);">South-led. Opportunity to expand depth.</td>
+            </tr>
+            <tr>
+              <td>Dark Blue</td>
+              <td style="font-weight:700;color:var(--success);">54.1%</td>
+              <td><span class="heat-cell heat-m">58.7%</span></td>
+              <td><span class="heat-cell heat-m">53.2%</span></td>
+              <td><span class="heat-cell heat-m">49.4%</span></td>
+              <td><span class="heat-cell heat-m">52.1%</span></td>
+              <td><span class="heat-cell heat-m">43.7%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Consistent but not outstanding. Monitor.</td>
+            </tr>
+            <tr>
+              <td>Off White</td>
+              <td style="font-weight:700;color:var(--success);">52.8%</td>
+              <td><span class="heat-cell heat-h">67.4%</span></td>
+              <td><span class="heat-cell heat-m">53.1%</span></td>
+              <td><span class="heat-cell heat-l">38.2%</span></td>
+              <td><span class="heat-cell heat-m">47.6%</span></td>
+              <td><span class="heat-cell heat-l">29.4%</span></td>
+              <td style="font-size:11px;color:var(--warn);">South-specific winner. Reduce Bihar depth.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);"><strong>Mid Blue</strong></td>
+              <td style="font-weight:700;color:var(--danger);">18.7%</td>
+              <td><span class="heat-cell heat-l">22.1%</span></td>
+              <td><span class="heat-cell heat-l">19.4%</span></td>
+              <td><span class="heat-cell heat-l">14.7%</span></td>
+              <td><span class="heat-cell heat-l">16.8%</span></td>
+              <td><span class="heat-cell heat-l">11.2%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Fails every zone. Structural exit. No exceptions.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ZONE × WASH -->
+    <div class="section">
+      <div class="section-title">Zonal trend — wash ST% by zone</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Wash</th><th>National</th><th>South</th><th>North</th><th>UP East</th><th>East/JHK</th><th>Bihar</th><th>Zonal verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Fashion Wash</strong></td>
+              <td style="font-weight:700;color:var(--success);">61.2%</td>
+              <td><span class="heat-cell heat-h">77.4%</span></td>
+              <td><span class="heat-cell heat-h">66.8%</span></td>
+              <td><span class="heat-cell heat-m">52.3%</span></td>
+              <td><span class="heat-cell heat-h">58.9%</span></td>
+              <td><span class="heat-cell heat-m">42.7%</span></td>
+              <td style="font-size:11px;color:var(--success);">Dominant in South + North. Build here.</td>
+            </tr>
+            <tr>
+              <td><strong>Acid Wash</strong></td>
+              <td style="font-weight:700;color:var(--success);">58.4%</td>
+              <td><span class="heat-cell heat-h">72.1%</span></td>
+              <td><span class="heat-cell heat-h">61.4%</span></td>
+              <td><span class="heat-cell heat-m">49.8%</span></td>
+              <td><span class="heat-cell heat-m">54.2%</span></td>
+              <td><span class="heat-cell heat-m">40.1%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong South + North. Expand.</td>
+            </tr>
+            <tr>
+              <td><strong>Dark Wash</strong></td>
+              <td style="font-weight:700;color:var(--success);">54.7%</td>
+              <td><span class="heat-cell heat-h">63.4%</span></td>
+              <td><span class="heat-cell heat-m">57.2%</span></td>
+              <td><span class="heat-cell heat-m">48.6%</span></td>
+              <td><span class="heat-cell heat-m">52.3%</span></td>
+              <td><span class="heat-cell heat-m">41.8%</span></td>
+              <td style="font-size:11px;color:var(--success);">Solid across zones. Hold depth.</td>
+            </tr>
+            <tr>
+              <td>Stone Wash</td>
+              <td style="font-weight:700;color:var(--success);">51.3%</td>
+              <td><span class="heat-cell heat-m">57.8%</span></td>
+              <td><span class="heat-cell heat-m">53.4%</span></td>
+              <td><span class="heat-cell heat-m">54.1%</span></td>
+              <td><span class="heat-cell heat-m">49.7%</span></td>
+              <td><span class="heat-cell heat-m">44.2%</span></td>
+              <td style="font-size:11px;color:var(--warn);">UP East over-indexes. Good zonal fit there.</td>
+            </tr>
+            <tr>
+              <td>Light Wash</td>
+              <td style="font-weight:700;color:var(--warn);">44.8%</td>
+              <td><span class="heat-cell heat-h">61.2%</span></td>
+              <td><span class="heat-cell heat-m">46.7%</span></td>
+              <td><span class="heat-cell heat-l">33.4%</span></td>
+              <td><span class="heat-cell heat-m">41.8%</span></td>
+              <td><span class="heat-cell heat-l">28.3%</span></td>
+              <td style="font-size:11px;color:var(--warn);">South only. Reduce UP East + Bihar allocation.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);"><strong>Basic Wash</strong></td>
+              <td style="font-weight:700;color:var(--danger);">32.1%</td>
+              <td><span class="heat-cell heat-l">28.4%</span></td>
+              <td><span class="heat-cell heat-l">31.7%</span></td>
+              <td><span class="heat-cell heat-l">29.8%</span></td>
+              <td><span class="heat-cell heat-l">27.6%</span></td>
+              <td><span class="heat-cell heat-l">24.1%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Fails all zones. Cut aggressively in SS27 buy.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ZONE × FABRIC -->
+    <div class="section">
+      <div class="section-title">Zonal trend — fabric ST% by zone</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Fabric</th><th>National</th><th>South</th><th>North</th><th>UP East</th><th>East/JHK</th><th>Bihar</th><th>Zonal verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SATIN LYCRA</strong></td>
+              <td style="font-weight:700;color:var(--success);">58.7%</td>
+              <td><span class="heat-cell heat-h">73.2%</span></td>
+              <td><span class="heat-cell heat-h">62.4%</span></td>
+              <td><span class="heat-cell heat-m">51.8%</span></td>
+              <td><span class="heat-cell heat-h">58.1%</span></td>
+              <td><span class="heat-cell heat-m">43.6%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong everywhere. Priority fabric for SS27.</td>
+            </tr>
+            <tr>
+              <td><strong>COTTON LYCRA</strong></td>
+              <td style="font-weight:700;color:var(--success);">53.9%</td>
+              <td><span class="heat-cell heat-h">64.7%</span></td>
+              <td><span class="heat-cell heat-m">56.2%</span></td>
+              <td><span class="heat-cell heat-m">48.4%</span></td>
+              <td><span class="heat-cell heat-m">52.7%</span></td>
+              <td><span class="heat-cell heat-m">41.2%</span></td>
+              <td style="font-size:11px;color:var(--success);">Solid performer. Maintain depth.</td>
+            </tr>
+            <tr>
+              <td>COTTON BLEND</td>
+              <td style="font-weight:700;color:var(--warn);">41.2%</td>
+              <td><span class="heat-cell heat-m">47.3%</span></td>
+              <td><span class="heat-cell heat-m">43.1%</span></td>
+              <td><span class="heat-cell heat-l">36.8%</span></td>
+              <td><span class="heat-cell heat-m">39.4%</span></td>
+              <td><span class="heat-cell heat-l">31.7%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Average. Reduce Bihar + UP East allocation.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);">NON STRETCH</td>
+              <td style="font-weight:700;color:var(--danger);">31.4%</td>
+              <td><span class="heat-cell heat-l">29.8%</span></td>
+              <td><span class="heat-cell heat-l">33.2%</span></td>
+              <td><span class="heat-cell heat-l">27.4%</span></td>
+              <td><span class="heat-cell heat-l">28.9%</span></td>
+              <td><span class="heat-cell heat-l">22.6%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Fails all zones. Exit from SS27 buy entirely.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ZONAL BUYING SIGNALS SUMMARY -->
+    <div class="section">
+      <div class="section-title">Zonal buying signal summary — SS27 action per zone</div>
+      <div class="three-col">
+        <div class="card" style="border-top:3px solid var(--success);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--success);">South — PRIORITY ZONE</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div>✅ Deepen Black + Indigo + Fashion Wash</div>
+            <div>✅ Flare + Wide Leg = strong niche here</div>
+            <div>✅ Off White works — unique to South</div>
+            <div>✅ SATIN LYCRA dominant</div>
+            <div>⚡ Propose South-specific buy for SS27</div>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--success);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--success);">North — BUILD ZONE</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div>✅ Skinny + Boot Cut lead</div>
+            <div>✅ Fashion + Acid Wash driving ST%</div>
+            <div>✅ Black + Indigo consistent</div>
+            <div>⚠️ Reduce Basic Wash allocation</div>
+            <div>⚠️ Mid Blue — exit immediately</div>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--gold);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--gold);">UP East — SELECTIVE ZONE</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div>⚠️ Stone Wash over-indexes here</div>
+            <div>⚠️ Straight Fit — local niche (47.8%)</div>
+            <div>⚠️ Mom Fit performing well</div>
+            <div>❌ Avoid fashion-forward options</div>
+            <div>❌ Off White + Light Wash — reduce depth</div>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--gold);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--gold);">East/JHK — HOLD ZONE</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div>⚠️ Mom Fit + Boot Cut = best fits here</div>
+            <div>⚠️ Indigo + Dark Blue reliable</div>
+            <div>⚠️ Acid + Dark Wash working</div>
+            <div>❌ Slim / Straight — underperform</div>
+            <div>❌ Basic Wash — exit aggressively</div>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--danger);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--danger);">Bihar — REDUCE ZONE</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div>❌ All fashion fits underperform</div>
+            <div>❌ Off White + Light Wash — remove</div>
+            <div>❌ NON STRETCH worst here (22.6%)</div>
+            <div>⚠️ Stone Wash is the only safe wash</div>
+            <div>⚠️ Reduce jeans depth 20%. Redirect OTB.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end v5 -->
+
+  <!-- VIEW 6 — STORE CLUSTER TREND -->
+  <div class="view" id="v6">
+
+    <div style="background:var(--accent-light);border:1px solid rgba(27,58,107,0.15);border-radius:var(--radius);padding:10px 14px;margin-bottom:1.25rem;font-size:11px;font-family:'DM Mono',monospace;color:var(--accent);">
+      STORE CLUSTER TREND — 6 clusters: Urban Store · Urban and Muslim · Non Muslim Store · Muslim Store · Muslim and T4 · Tier4 Store. Attribute ST% within each cluster. Cross-reference before any option cut.
+    </div>
+
+    <!-- CLUSTER SCORECARD -->
+    <div class="section">
+      <div class="section-title">Store cluster overall scorecard</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cluster</th>
+              <th>ST%</th>
+              <th>vs National</th>
+              <th>Outperformers</th>
+              <th>Critical</th>
+              <th>Top fit</th>
+              <th>Top colour</th>
+              <th>Top wash</th>
+              <th>Signal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Urban Store</strong></td>
+              <td style="font-weight:700;color:var(--success);">71.2%</td>
+              <td style="color:var(--success);">+28.5pp</td>
+              <td style="color:var(--success);">108</td>
+              <td style="color:var(--success);">2</td>
+              <td>Skinny / Flare / Wide Leg</td>
+              <td>Black / Indigo</td>
+              <td>Fashion / Acid Wash</td>
+              <td><span class="sig sig-fire">🔥 STRONG BUY</span></td>
+            </tr>
+            <tr>
+              <td><strong>Urban and Muslim</strong></td>
+              <td style="font-weight:700;color:var(--success);">61.4%</td>
+              <td style="color:var(--success);">+18.7pp</td>
+              <td style="color:var(--success);">84</td>
+              <td style="color:var(--success);">6</td>
+              <td>Boot Cut / Mom Fit</td>
+              <td>Black / Dark Blue</td>
+              <td>Fashion / Dark Wash</td>
+              <td><span class="sig sig-buy">✅ BUY</span></td>
+            </tr>
+            <tr>
+              <td><strong>Non Muslim Store</strong></td>
+              <td style="font-weight:700;color:var(--success);">54.8%</td>
+              <td style="color:var(--success);">+12.1pp</td>
+              <td style="color:var(--success);">71</td>
+              <td style="color:var(--warn);">9</td>
+              <td>Skinny / Wide Leg / Carrot</td>
+              <td>Indigo / Light Blue</td>
+              <td>Acid / Stone Wash</td>
+              <td><span class="sig sig-buy">✅ BUY</span></td>
+            </tr>
+            <tr>
+              <td><strong>Muslim Store</strong></td>
+              <td style="font-weight:700;color:var(--warn);">38.7%</td>
+              <td style="color:var(--warn);">−4.0pp</td>
+              <td style="color:var(--warn);">36</td>
+              <td style="color:var(--warn);">18</td>
+              <td>Straight / Mom Fit</td>
+              <td>Dark Blue / Indigo</td>
+              <td>Stone / Dark Wash</td>
+              <td><span class="sig sig-hold">⚠️ HOLD</span></td>
+            </tr>
+            <tr>
+              <td><strong>Muslim and T4</strong></td>
+              <td style="font-weight:700;color:var(--warn);">33.4%</td>
+              <td style="color:var(--danger);">−9.3pp</td>
+              <td style="color:var(--warn);">21</td>
+              <td style="color:var(--danger);">24</td>
+              <td>Straight Basic</td>
+              <td>Dark Blue</td>
+              <td>Stone Wash</td>
+              <td><span class="sig sig-exit">❌ REDUCE DEPTH</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tier4 Store</strong></td>
+              <td style="font-weight:700;color:var(--danger);">29.3%</td>
+              <td style="color:var(--danger);">−13.4pp</td>
+              <td style="color:var(--danger);">11</td>
+              <td style="color:var(--danger);">29</td>
+              <td>Basic Straight</td>
+              <td>Dark Blue</td>
+              <td>Basic Wash</td>
+              <td><span class="sig sig-exit">❌ EXIT FASHION JEANS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CLUSTER × FIT -->
+    <div class="section">
+      <div class="section-title">Cluster trend — fit ST% by store cluster</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Fit</th><th>Urban</th><th>Urban + Muslim</th><th>Non Muslim</th><th>Muslim</th><th>Muslim + T4</th><th>Tier4</th><th>Cluster verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Skinny Fit</strong></td>
+              <td><span class="heat-cell heat-h">82.4%</span></td>
+              <td><span class="heat-cell heat-h">67.3%</span></td>
+              <td><span class="heat-cell heat-h">71.8%</span></td>
+              <td><span class="heat-cell heat-l">28.4%</span></td>
+              <td><span class="heat-cell heat-l">22.1%</span></td>
+              <td><span class="heat-cell heat-l">18.7%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban-only play. Remove from Muslim + Tier4.</td>
+            </tr>
+            <tr>
+              <td><strong>Flare</strong></td>
+              <td><span class="heat-cell heat-h">79.1%</span></td>
+              <td><span class="heat-cell heat-h">63.4%</span></td>
+              <td><span class="heat-cell heat-h">68.2%</span></td>
+              <td><span class="heat-cell heat-l">24.7%</span></td>
+              <td><span class="heat-cell heat-l">19.3%</span></td>
+              <td><span class="heat-cell heat-l">14.2%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban + Non-Muslim strong. Exit Muslim + Tier4.</td>
+            </tr>
+            <tr>
+              <td><strong>Wide Leg</strong></td>
+              <td><span class="heat-cell heat-h">76.4%</span></td>
+              <td><span class="heat-cell heat-m">58.7%</span></td>
+              <td><span class="heat-cell heat-h">64.3%</span></td>
+              <td><span class="heat-cell heat-l">27.8%</span></td>
+              <td><span class="heat-cell heat-l">21.4%</span></td>
+              <td><span class="heat-cell heat-l">16.8%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban dominant. Do not push to Muslim cluster.</td>
+            </tr>
+            <tr>
+              <td><strong>Boot Cut</strong></td>
+              <td><span class="heat-cell heat-h">71.3%</span></td>
+              <td><span class="heat-cell heat-h">72.8%</span></td>
+              <td><span class="heat-cell heat-h">66.4%</span></td>
+              <td><span class="heat-cell heat-m">48.2%</span></td>
+              <td><span class="heat-cell heat-l">38.4%</span></td>
+              <td><span class="heat-cell heat-l">29.1%</span></td>
+              <td style="font-size:11px;color:var(--success);">Best cross-cluster performer. Urban + Muslim both strong.</td>
+            </tr>
+            <tr>
+              <td><strong>Mom Fit</strong></td>
+              <td><span class="heat-cell heat-h">68.4%</span></td>
+              <td><span class="heat-cell heat-h">69.2%</span></td>
+              <td><span class="heat-cell heat-m">61.7%</span></td>
+              <td><span class="heat-cell heat-m">54.3%</span></td>
+              <td><span class="heat-cell heat-m">44.8%</span></td>
+              <td><span class="heat-cell heat-l">32.7%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong Urban + Muslim. Best fit for Muslim cluster.</td>
+            </tr>
+            <tr>
+              <td><strong>Carrot Fit</strong></td>
+              <td><span class="heat-cell heat-h">67.2%</span></td>
+              <td><span class="heat-cell heat-m">54.8%</span></td>
+              <td><span class="heat-cell heat-h">62.4%</span></td>
+              <td><span class="heat-cell heat-l">34.1%</span></td>
+              <td><span class="heat-cell heat-l">28.3%</span></td>
+              <td><span class="heat-cell heat-l">22.1%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban + Non-Muslim. Moderate Urban+Muslim.</td>
+            </tr>
+            <tr>
+              <td>Straight Fit</td>
+              <td><span class="heat-cell heat-l">19.4%</span></td>
+              <td><span class="heat-cell heat-m">41.7%</span></td>
+              <td><span class="heat-cell heat-l">31.2%</span></td>
+              <td><span class="heat-cell heat-h">52.1%</span></td>
+              <td><span class="heat-cell heat-m">48.7%</span></td>
+              <td><span class="heat-cell heat-m">43.2%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Muslim cluster niche! Do NOT cut — reassign from Urban.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);">Slim Fit</td>
+              <td><span class="heat-cell heat-l">18.2%</span></td>
+              <td><span class="heat-cell heat-l">22.4%</span></td>
+              <td><span class="heat-cell heat-l">24.7%</span></td>
+              <td><span class="heat-cell heat-l">19.3%</span></td>
+              <td><span class="heat-cell heat-l">14.2%</span></td>
+              <td><span class="heat-cell heat-l">11.8%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Fails all clusters. No exceptions. Exit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">⚑ Straight Fit: Urban ST% 19.4% vs Muslim Store 52.1% — classic tail-cutting trap. Transfer stock Urban → Muslim cluster before any markdown.</div>
+    </div>
+
+    <!-- CLUSTER × COLOUR -->
+    <div class="section">
+      <div class="section-title">Cluster trend — colour ST% by store cluster</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Colour</th><th>Urban</th><th>Urban + Muslim</th><th>Non Muslim</th><th>Muslim</th><th>Muslim + T4</th><th>Tier4</th><th>Cluster verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Black</strong></td>
+              <td><span class="heat-cell heat-h">84.7%</span></td>
+              <td><span class="heat-cell heat-h">74.2%</span></td>
+              <td><span class="heat-cell heat-h">72.8%</span></td>
+              <td><span class="heat-cell heat-m">51.4%</span></td>
+              <td><span class="heat-cell heat-m">44.7%</span></td>
+              <td><span class="heat-cell heat-l">31.2%</span></td>
+              <td style="font-size:11px;color:var(--success);">Urban + Non-Muslim dominant. Reduce Tier4.</td>
+            </tr>
+            <tr>
+              <td><strong>Indigo</strong></td>
+              <td><span class="heat-cell heat-h">79.3%</span></td>
+              <td><span class="heat-cell heat-h">68.4%</span></td>
+              <td><span class="heat-cell heat-h">71.2%</span></td>
+              <td><span class="heat-cell heat-m">52.7%</span></td>
+              <td><span class="heat-cell heat-m">41.3%</span></td>
+              <td><span class="heat-cell heat-l">28.4%</span></td>
+              <td style="font-size:11px;color:var(--success);">Strong Urban + Non-Muslim. Works in Muslim too.</td>
+            </tr>
+            <tr>
+              <td><strong>Light Blue</strong></td>
+              <td><span class="heat-cell heat-h">72.4%</span></td>
+              <td><span class="heat-cell heat-m">59.3%</span></td>
+              <td><span class="heat-cell heat-h">66.8%</span></td>
+              <td><span class="heat-cell heat-l">32.4%</span></td>
+              <td><span class="heat-cell heat-l">27.8%</span></td>
+              <td><span class="heat-cell heat-l">21.4%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban + Non-Muslim only. Exit Muslim + Tier4.</td>
+            </tr>
+            <tr>
+              <td>Dark Blue</td>
+              <td><span class="heat-cell heat-h">63.4%</span></td>
+              <td><span class="heat-cell heat-h">61.7%</span></td>
+              <td><span class="heat-cell heat-m">58.2%</span></td>
+              <td><span class="heat-cell heat-h">63.8%</span></td>
+              <td><span class="heat-cell heat-m">54.2%</span></td>
+              <td><span class="heat-cell heat-m">42.7%</span></td>
+              <td style="font-size:11px;color:var(--success);">Best cross-cluster colour. Works even in Muslim + Tier4.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);"><strong>Mid Blue</strong></td>
+              <td><span class="heat-cell heat-l">21.4%</span></td>
+              <td><span class="heat-cell heat-l">17.8%</span></td>
+              <td><span class="heat-cell heat-l">19.3%</span></td>
+              <td><span class="heat-cell heat-l">14.2%</span></td>
+              <td><span class="heat-cell heat-l">11.7%</span></td>
+              <td><span class="heat-cell heat-l">9.4%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Worst colour across all 6 clusters. Global exit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">⚑ Dark Blue is the only colour that works across all 6 clusters including Muslim + Tier4. Anchor colour for cluster-agnostic assortment.</div>
+    </div>
+
+    <!-- CLUSTER × WASH -->
+    <div class="section">
+      <div class="section-title">Cluster trend — wash ST% by store cluster</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Wash</th><th>Urban</th><th>Urban + Muslim</th><th>Non Muslim</th><th>Muslim</th><th>Muslim + T4</th><th>Tier4</th><th>Cluster verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Fashion Wash</strong></td>
+              <td><span class="heat-cell heat-h">81.4%</span></td>
+              <td><span class="heat-cell heat-h">69.7%</span></td>
+              <td><span class="heat-cell heat-h">73.2%</span></td>
+              <td><span class="heat-cell heat-l">28.3%</span></td>
+              <td><span class="heat-cell heat-l">21.4%</span></td>
+              <td><span class="heat-cell heat-l">17.8%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Urban + Non-Muslim only. Not for Muslim/Tier4.</td>
+            </tr>
+            <tr>
+              <td><strong>Acid Wash</strong></td>
+              <td><span class="heat-cell heat-h">76.8%</span></td>
+              <td><span class="heat-cell heat-h">64.2%</span></td>
+              <td><span class="heat-cell heat-h">68.7%</span></td>
+              <td><span class="heat-cell heat-l">31.4%</span></td>
+              <td><span class="heat-cell heat-l">24.7%</span></td>
+              <td><span class="heat-cell heat-l">19.3%</span></td>
+              <td style="font-size:11px;color:var(--warn);">Same as Fashion Wash — urban-skewed. Avoid Muslim + Tier4.</td>
+            </tr>
+            <tr>
+              <td><strong>Stone Wash</strong></td>
+              <td><span class="heat-cell heat-m">58.4%</span></td>
+              <td><span class="heat-cell heat-m">57.8%</span></td>
+              <td><span class="heat-cell heat-m">54.2%</span></td>
+              <td><span class="heat-cell heat-h">61.4%</span></td>
+              <td><span class="heat-cell heat-m">52.3%</span></td>
+              <td><span class="heat-cell heat-m">44.7%</span></td>
+              <td style="font-size:11px;color:var(--success);">Best cross-cluster wash. Muslim cluster top wash. Deepen here.</td>
+            </tr>
+            <tr>
+              <td><strong>Dark Wash</strong></td>
+              <td><span class="heat-cell heat-h">63.7%</span></td>
+              <td><span class="heat-cell heat-h">64.8%</span></td>
+              <td><span class="heat-cell heat-m">59.3%</span></td>
+              <td><span class="heat-cell heat-m">54.7%</span></td>
+              <td><span class="heat-cell heat-m">47.2%</span></td>
+              <td><span class="heat-cell heat-l">36.4%</span></td>
+              <td style="font-size:11px;color:var(--success);">Good across Urban + Muslim. Works to Tier4 at lower depth.</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger);"><strong>Basic Wash</strong></td>
+              <td><span class="heat-cell heat-l">24.3%</span></td>
+              <td><span class="heat-cell heat-l">28.7%</span></td>
+              <td><span class="heat-cell heat-l">27.4%</span></td>
+              <td><span class="heat-cell heat-l">31.2%</span></td>
+              <td><span class="heat-cell heat-l">29.8%</span></td>
+              <td><span class="heat-cell heat-l">26.4%</span></td>
+              <td style="font-size:11px;color:var(--danger);">Fails all 6 clusters. No cluster saves Basic Wash. Exit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:10px;color:var(--text-hint);margin-top:6px;font-family:'DM Mono',monospace;">⚑ Stone Wash + Dark Wash = only washes that work across Urban AND Muslim clusters. These are the safe washes for cluster-agnostic SS27 buys.</div>
+    </div>
+
+    <!-- CLUSTER ASSORTMENT STRATEGY -->
+    <div class="section">
+      <div class="section-title">Cluster-specific assortment strategy — SS27</div>
+      <div class="two-col">
+        <div class="card" style="border-left:3px solid var(--success);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Urban Store + Non Muslim Store</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div><strong>Fits:</strong> Skinny, Flare, Wide Leg, Boot Cut, Carrot</div>
+            <div><strong>Colours:</strong> Black, Indigo, Light Blue, Off White</div>
+            <div><strong>Wash:</strong> Fashion, Acid, Dark — no Basic Wash</div>
+            <div><strong>Fabric:</strong> SATIN LYCRA priority</div>
+            <div><strong>Depth:</strong> Full fashion assortment. Maximum option depth.</div>
+            <div style="margin-top:6px;font-size:11px;color:var(--success);font-family:'DM Mono',monospace;">Target ST% SS27: 72–75%</div>
+          </div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--gold);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Urban and Muslim</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div><strong>Fits:</strong> Boot Cut, Mom Fit, Carrot (no Skinny/Flare)</div>
+            <div><strong>Colours:</strong> Black, Indigo, Dark Blue</div>
+            <div><strong>Wash:</strong> Fashion, Dark Wash — moderate Stone Wash</div>
+            <div><strong>Fabric:</strong> SATIN LYCRA + COTTON LYCRA mix</div>
+            <div><strong>Depth:</strong> Selective fashion. Moderate option depth.</div>
+            <div style="margin-top:6px;font-size:11px;color:var(--gold);font-family:'DM Mono',monospace;">Target ST% SS27: 63–66%</div>
+          </div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--gold);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Muslim Store</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div><strong>Fits:</strong> Straight, Mom Fit, Boot Cut only</div>
+            <div><strong>Colours:</strong> Dark Blue, Indigo only</div>
+            <div><strong>Wash:</strong> Stone Wash, Dark Wash only</div>
+            <div><strong>Fabric:</strong> COTTON LYCRA preferred</div>
+            <div><strong>Depth:</strong> Reduced. Reallocate Skinny/Flare stock here from Urban.</div>
+            <div style="margin-top:6px;font-size:11px;color:var(--gold);font-family:'DM Mono',monospace;">Target ST% SS27: 48–52%</div>
+          </div>
+        </div>
+        <div class="card" style="border-left:3px solid var(--danger);">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Muslim + T4 · Tier4 Store</div>
+          <div style="font-size:12px;line-height:1.9;">
+            <div><strong>Fits:</strong> Straight Basic only. No fashion fits.</div>
+            <div><strong>Colours:</strong> Dark Blue only</div>
+            <div><strong>Wash:</strong> Stone Wash only. Exit all others.</div>
+            <div><strong>Fabric:</strong> COTTON BLEND acceptable here</div>
+            <div><strong>Depth:</strong> Minimum 2–3 options max. Reallocate remaining OTB to ethnic categories.</div>
+            <div style="margin-top:6px;font-size:11px;color:var(--danger);font-family:'DM Mono',monospace;">Target ST% SS27: 38–42% (realistic for cluster)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITICAL TAIL-CUTTING SAFEGUARDS -->
+    <div class="section">
+      <div class="section-title">Critical tail-cutting safeguards — do not cut before checking cluster</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Option / Attribute</th><th>National ST%</th><th>Danger cluster</th><th>Safe cluster</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-STRAIGHT[L]</td>
+              <td style="color:var(--warn);font-weight:700;">31.2%</td>
+              <td>Urban: 19.4%</td>
+              <td style="color:var(--success);">Muslim Store: 52.1%</td>
+              <td style="font-size:11px;">Transfer Urban stock → Muslim cluster. Do NOT markdown.</td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;">JEANS-MOM-SOLID[L]</td>
+              <td style="color:var(--warn);font-weight:700;">38.7%</td>
+              <td>Bihar: 28.3%</td>
+              <td style="color:var(--success);">Urban+Muslim: 69.2%</td>
+              <td style="font-size:11px;">Withdraw from Bihar. Deepen in Urban+Muslim cluster.</td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;">Stone Wash options</td>
+              <td style="color:var(--warn);font-weight:700;">51.3% national</td>
+              <td>Urban: appears moderate</td>
+              <td style="color:var(--success);">Muslim Store: 61.4%</td>
+              <td style="font-size:11px;">Stone Wash is the Muslim cluster's top wash. Protect this depth.</td>
+            </tr>
+            <tr>
+              <td style="font-family:'DM Mono',monospace;font-size:11px;">Dark Blue colour</td>
+              <td style="color:var(--success);font-weight:700;">54.1%</td>
+              <td>Tier4: 42.7% (modest)</td>
+              <td style="color:var(--success);">Muslim: 63.8%</td>
+              <td style="font-size:11px;">Only cross-cluster reliable colour. Never reduce depth here.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end v6 -->
+
+</div><!-- page-wrap -->
+
+<footer>
+  VMart Buying Intelligence · Women's Jeans Fashion · CO26 · Internal use only · May 2026
+</footer>
+
+<script>
+function switchTab(viewId, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+const ARTICLES = [
+  { name:'JEANS-SKINNY-FIT[M] (Fashion)', st:78.4, fit:'Skinny Fit', colour:'Black', fabric:'SATIN LYCRA', wash:'Fashion Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'71.2%','UP East':'63.8%',Bihar:'51.4%','East/JHK':'66.7%',South:'78.9%'} },
+  { name:'JEANS-BOOTCUT[M] (Fashion)', st:74.1, fit:'Boot Cut', colour:'Indigo', fabric:'SATIN LYCRA', wash:'Fashion Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'68.4%','UP East':'57.2%',Bihar:'44.1%','East/JHK':'61.3%',South:'74.2%'} },
+  { name:'JEANS-MOM-FIT[M]', st:69.8, fit:'Mom Fit', colour:'Light Blue', fabric:'COTTON LYCRA', wash:'Acid Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'61.2%','UP East':'53.4%',Bihar:'38.2%','East/JHK':'57.1%',South:'71.4%'} },
+  { name:'JEANS-FLARE[M]', st:66.3, fit:'Flare', colour:'Dark Blue', fabric:'COTTON LYCRA', wash:'Dark Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'69.1%','UP East':'54.3%',Bihar:'41.8%','East/JHK':'61.8%',South:'78.2%'} },
+  { name:'JEANS-WIDE-LEG[M]', st:63.9, fit:'Wide Leg', colour:'Off White', fabric:'COTTON LYCRA', wash:'Light Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'58.4%','UP East':'49.7%',Bihar:'34.1%','East/JHK':'55.2%',South:'74.6%'} },
+  { name:'JEANS-CARROT[M]', st:58.2, fit:'Carrot Fit', colour:'Blue Tint', fabric:'SATIN LYCRA', wash:'Stone Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'62.1%','UP East':'47.2%',Bihar:'38.4%','East/JHK':'54.7%',South:'64.8%'} },
+  { name:'JEANS-SKINNY-FIT[L] (Basic)', st:7.1, fit:'Skinny Fit', colour:'Mid Blue', fabric:'SATIN LYCRA', wash:'Basic Wash', rise:'High-Rise', pattern:'Solid', zones:{North:'8.2%','UP East':'6.4%',Bihar:'4.1%','East/JHK':'7.3%',South:'9.1%'} },
+  { name:'JEANS-SKINNY-HR[L]', st:12.3, fit:'Skinny Fit', colour:'Blue', fabric:'NON STRETCH', wash:'Basic Wash', rise:'High-Rise', pattern:'Solid', zones:{North:'13.2%','UP East':'10.4%',Bihar:'8.7%','East/JHK':'11.8%',South:'14.1%'} },
+  { name:'JEANS-SLIM-FIT[L]', st:18.7, fit:'Slim Fit', colour:'Black', fabric:'NON STRETCH', wash:'Basic Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'21.4%','UP East':'14.2%',Bihar:'11.3%','East/JHK':'17.6%',South:'22.8%'} },
+  { name:'JEANS-BOOT-SOLID[L]', st:27.4, fit:'Boot Cut', colour:'Mid Blue', fabric:'COTTON BLEND', wash:'Basic Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'29.1%','UP East':'22.4%',Bihar:'18.7%','East/JHK':'26.3%',South:'32.1%'} },
+  { name:'JEANS-STRAIGHT[L]', st:31.2, fit:'Straight', colour:'Dark Blue', fabric:'COTTON BLEND', wash:'Basic Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'28.4%','UP East':'47.8%',Bihar:'22.1%','East/JHK':'31.4%',South:'18.2%'} },
+  { name:'JEANS-MOM-SOLID[L]', st:38.7, fit:'Mom Fit', colour:'Light Blue', fabric:'COTTON LYCRA', wash:'Stone Wash', rise:'Mid-Rise', pattern:'Solid', zones:{North:'54.2%','UP East':'61.4%',Bihar:'28.3%','East/JHK':'42.1%',South:'44.7%'} },
+];
+
+let filteredMatches = [];
+
+function getSignal(st) {
+  const natl = 42.7;
+  if (st >= natl + 15) return '<span class="sig sig-fire">🔥 STRONG BUY</span>';
+  if (st >= natl + 5) return '<span class="sig sig-buy">✅ BUY</span>';
+  if (st >= natl - 10) return '<span class="sig sig-hold">⚠️ HOLD</span>';
+  return '<span class="sig sig-exit">❌ EXIT</span>';
+}
+
+function filterArticles(val) {
+  const drop = document.getElementById('searchDrop');
+  const det = document.getElementById('artDetail');
+  if (!val.trim()) { drop.style.display='none'; det.style.display='none'; return; }
+  filteredMatches = ARTICLES.filter(a => a.name.toLowerCase().includes(val.toLowerCase()));
+  if (!filteredMatches.length) {
+    drop.innerHTML = '<div class="search-item" style="color:var(--text-hint);">No options found</div>';
+    drop.style.display = 'block'; det.style.display = 'none'; return;
+  }
+  drop.innerHTML = filteredMatches.map((a,i) =>
+    `<div class="search-item" onclick="showDetail(${i})">${a.name} — <strong style="color:${a.st>=42.7?'var(--success)':'var(--danger)'};">${a.st.toFixed(1)}% ST%</strong></div>`
+  ).join('');
+  drop.style.display = 'block';
+  det.style.display = 'none';
+}
+
+function showDetail(idx) {
+  const a = filteredMatches[idx];
+  const det = document.getElementById('artDetail');
+  document.getElementById('searchDrop').style.display = 'none';
+  const stColor = a.st >= 42.7 ? 'var(--success)' : 'var(--danger)';
+  const delta = (a.st - 42.7).toFixed(1);
+  const deltaStr = delta >= 0 ? `+${delta}pp` : `${delta}pp`;
+  const deltaColor = delta >= 0 ? 'var(--success)' : 'var(--danger)';
+  det.style.display = 'block';
+  det.innerHTML = `
+    <div class="art-detail-card">
+      <div class="art-detail-header">
+        <div>
+          <div style="font-size:15px;font-weight:700;">${a.name}</div>
+          <div style="font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;margin-top:3px;">Women Western · Jeans-Fashion-Women · CO26</div>
+        </div>
+        ${getSignal(a.st)}
+      </div>
+      <div class="art-kpi-row">
+        <div class="art-kpi"><div class="art-kpi-label">ST%</div><div class="art-kpi-val" style="color:${stColor};">${a.st.toFixed(1)}%</div></div>
+        <div class="art-kpi"><div class="art-kpi-label">vs national</div><div class="art-kpi-val" style="color:${deltaColor};">${deltaStr}</div></div>
+        <div class="art-kpi"><div class="art-kpi-label">Fit</div><div class="art-kpi-val" style="font-size:13px;">${a.fit}</div></div>
+        <div class="art-kpi"><div class="art-kpi-label">Wash</div><div class="art-kpi-val" style="font-size:13px;">${a.wash}</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem;font-size:12px;">
+        <div><span style="color:var(--text-hint);font-family:'DM Mono',monospace;font-size:10px;">COLOUR</span><br>${a.colour}</div>
+        <div><span style="color:var(--text-hint);font-family:'DM Mono',monospace;font-size:10px;">FABRIC</span><br>${a.fabric}</div>
+        <div><span style="color:var(--text-hint);font-family:'DM Mono',monospace;font-size:10px;">RISE</span><br>${a.rise}</div>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--text-hint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Zone-wise ST%</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${Object.entries(a.zones).map(([z,v]) => {
+          const pct = parseFloat(v);
+          const bg = pct >= 42.7 ? 'var(--success-bg)' : 'var(--danger-bg)';
+          const col = pct >= 42.7 ? 'var(--success)' : 'var(--danger)';
+          return `<div style="background:${bg};border-radius:var(--radius);padding:8px 12px;text-align:center;"><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--text-hint);margin-bottom:4px;">${z}</div><div style="font-size:16px;font-weight:700;color:${col};">${v}</div></div>`;
+        }).join('')}
+      </div>
+      <div style="border-top:1px dashed var(--border);margin-top:1rem;padding-top:0.75rem;font-size:10px;font-family:'DM Mono',monospace;color:var(--text-hint);">
+        MRP placeholder — add MRP data &nbsp;·&nbsp; Vendor placeholder — add vendor data
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
